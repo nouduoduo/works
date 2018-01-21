@@ -1,0 +1,155 @@
+<h1>更改密码</h1>
+<form name="changeForm"
+      id="changeForm"
+      class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label"> 登录名 :</label>
+        <div class="col-sm-10">
+            <input class="form-control"
+                   type="text"
+                   placeholder="请输入登录名"
+                   name="loginName"
+                   value="{{loginName}}"
+                   id="chloginName"
+                   readonly="readonly"
+                   required>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">旧密码 :</label>
+        <div class="col-sm-10">
+            <input class="form-control"
+                   type="password"
+                   placeholder="请输入旧密码"
+                   name="pwd"
+                   id="oldpwd"
+                   required>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">新密码 :</label>
+        <div class="col-sm-10">
+            <input class="form-control"
+                   type="password"
+                   placeholder="请输入新密码"
+                   name="newpwd"
+                   id="newpwd"
+                   required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">确认新密码 :</label>
+        <div class="col-sm-10">
+            <input class="form-control"
+                   type="password"
+                   placeholder="请重新确认新密码"
+                   name="tonewpwd"
+                   id="tonewpwd"
+                   required>
+        </div>
+    </div>
+    <div class="form-group text-left" id="ErrorMsg-panle">
+        <label class="col-sm-2 control-label"> </label>
+        <div class="col-sm-10">
+            <span id="ErrorMsg" class="alert alert-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"> </label>
+        <div class="col-sm-10">
+
+
+
+            <input type="button"
+                   value="保存"
+                   id="btn-submit"
+                   onclick="validatorForm();"
+                   class="btn btn-default">
+            &nbsp;&nbsp;
+            <input class="btn btn-default"
+                   type="reset" value="取消" >
+        </div>
+    </div>
+</form>
+
+{{#section 'customjs'}}
+    <script src="./vendor/validator/validator.min.js"></script>
+    <script>
+        //点击登录提交按钮
+        $(function () {
+            //默认加载时隐藏错误信息块
+            $("#ErrorMsg,#ErrorMsg-panle").hide();
+
+        })
+
+        function validatorForm() {
+            var ret = true;
+            if(validator.isEmpty($("#chloginName").val())){
+                ret = false;
+                alert("登录名不能为空！");
+                $("#chloginName").focus();
+                return false;
+             }
+
+            if(validator.isEmpty($("#oldpwd").val())){
+                ret = false;
+                alert("旧密码不能为空！");
+                $("#oldpwd").focus();
+                return false;
+            }
+            if(validator.isEmpty($("#newpwd").val())){
+                ret = false;
+                alert("新密码不能为空！");
+                $("#newpwd").focus();
+                return false;
+            }
+
+            if(validator.isEmpty($("#tonewpwd").val())){
+                ret = false;
+                alert("确认新密码不能为空！");
+                $("#tonewpwd").focus();
+                return false;
+            }
+
+            if($("#tonewpwd").val()!==$("#newpwd").val()){
+                ret = false;
+                alert("新密码和确认新密码一定要相同！");
+                $("#tonewpwd").focus();
+                return false;
+            }
+            if(ret)  changepwd();
+        }
+
+
+
+        //登录方法
+        function changepwd() {
+            var para  = $("#changeForm").serialize();
+            alert()
+            $.ajax({
+                url:'/changpwd',
+                type: 'POST',
+                async:true,
+                data:para,
+                success: function(data)
+                {
+                    if(parseInt(data.code)==0)
+                    {
+                        $("#ErrorMsg,#ErrorMsg-panle").show();
+                        $("#ErrorMsg").html(data.errorMsg);
+                        $("#loginname").val('');
+                        $("#loginname").focus();
+                    }
+                    if(parseInt(data.code)==1)
+                    {
+                       alert("====="); 
+                        window.location.href=data.url;
+                    }
+                }
+            });
+        }
+
+    </script>
+{{/section}}

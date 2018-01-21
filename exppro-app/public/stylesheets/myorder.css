@@ -1,0 +1,29 @@
+@charset "utf-8";
+ul{
+    color: #3c3c3c;
+}
+li{
+    list-style: none;
+    background: rgba(5, 5, 5, 0.05);
+    border-radius: 10px;
+    margin-bottom: 2%;
+}
+.title{
+    font-size: 16px;
+    margin: 1% 0 1% 0 ;
+}
+.details h3{
+    font-size: 18px;
+    margin: 0 0 1% 0;
+    color: #000;
+}
+.details span:last-child, .rm{
+    color: #f40;
+}
+.service{
+    margin: 1% 0 1% 0;
+}
+.service button{
+    margin-right: 2%;
+    padding: 1px 10px;
+}

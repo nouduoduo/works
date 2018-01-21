@@ -1,0 +1,75 @@
+{{#section 'head'}}
+    <link href="./stylesheets/myorder.css" rel="stylesheet">
+{{/section}}
+
+<div class="container">
+    <div class="row">
+        <ul id="orderlist">
+
+
+        </ul>
+    </div>
+</div>
+
+{{#section 'customjs'}}
+    <script>
+        //登录方法
+        $(function() {
+            var para = '';
+            var str = '';
+                    $.ajax({
+                        url:'/order',
+                        type: 'GET',
+                        async:true,
+                        data:para,
+                        success: function(data)
+                        {
+                            console.log(data)
+                            console.log(data.orders[0].qty)
+                            if(parseInt(data.code)==0)
+                            {
+
+                            }
+                            if(parseInt(data.code)==1)
+                            {
+                                data.orders.forEach(function (order) {
+                                    order.item.forEach(function (product) {
+                                        str+='<li class="col-lg-12 col-md-12 col-xs-12 col-xs-12"> ' +
+                                                '<div >' +
+                                                ' <span>订单编号：</span><span>' + order._id+'</span> </div>' +
+                                                '<div class="col-lg-3 col-md-3 col-xs-3 col-xs-3"> ' +
+                                                '<img class="img-responsive img-rounded" src="'+product.picpath+'">' +
+                                                '</div>'+
+                                                '<div class="col-lg-9 col-md-9 col-xs-9 col-xs-9 details">' +
+                                                '<h3>'+product.name+'</h3>' +
+                                                ' <p><span>数量：</span>'+
+                                                '<span>'+order.qty+'</span></p>' +
+                                                ' <p><span>价钱：</span><span class="rm">￥</span><span>'+product.price+'</span></p>' +
+                                                ' <p><span>颜色分类：</span><span>浅绿.短款</span></p> <p><span>尺码：</span><span>S</span></p>' +
+                                                '  <div class="col-lg-12 col-md-12 col-xs-12 col-xs-12 service"> ' +
+                                                '<button type="button" class="btn btn-warning">查看物流</button> ' +
+                                                '<button type="button" class="btn btn-warning">确认收货</button> ' +
+                                                '<button type="button" class="btn btn-warning">评价</button></div> </li>'
+                                    })
+
+
+
+
+//                                         <p><span>价钱：</span><span class="rm">￥</span><span>${data.orders[0].price}</span></p>
+//                                        <p><span>颜色分类：</span><span>浅绿.短款</span></p>
+//                                        <p><span>尺码：</span><span>S</span></p>
+//                                    </div>
+//                                    <div class="col-lg-12 col-md-12 col-xs-12 col-xs-12 service">
+//                                        <button type="button" class="btn btn-warning">查看物流</button>
+//                                        <button type="button" class="btn btn-warning">确认收货</button>
+//                                        <button type="button" class="btn btn-warning">评价</button>
+//                                    </div>
+//                                    </li>`
+                                })
+                                $("#orderlist").html(str)
+                            }
+                        }
+                    });
+                })
+    </script>
+{{/section}}

@@ -1,0 +1,21 @@
+{{#section 'head'}}
+    <meta name="robots" content="noindex">
+    <link href="./vendor/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    {{/section}}
+    <h1>{{title}}</h1>
+    <div class="content">
+
+        <table id="example"
+               class="table table-striped table-bordered"
+               cellspacing="0"
+               width="100%">
+        </table>
+    </div>
+
+    {{#section 'customjs'}}
+        <script src=".endor/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src=".endor/datatables.net -bs/js/dataTables.bootstrap.min.js"></script>
+        <script>
+
+        </script>
+        {{/section}}

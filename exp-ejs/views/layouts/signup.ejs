@@ -1,0 +1,43 @@
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel1">SignUP</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="signUpform" id="signUpform" action="/signUp" method="POST">
+                    <div class="form-group">
+                        <label for="phone" class="col-sm-2 control-label">tel</label>
+                        <div class="col-sm-10">
+                            <input type="tel" class="form-control" id="phone" placeholder="telephoneNumber" name="phone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="pwd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword4" class="col-sm-2 control-label">Verify</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputPassword4" placeholder="Verify Password" name="repwd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword5" class="col-sm-2 control-label">auth code</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputPassword5" placeholder="auth code">
+                            <input type="text" class="form-control" id="auth" readonly="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" >Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

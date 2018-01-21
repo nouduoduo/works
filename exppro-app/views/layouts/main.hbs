@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+      <meta charset="utf-8">
+      <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
+      <meta name="viewport" content="width=device-width">
+      <meta name="description" content="">
+      <meta name="keywords" content="">
+      <base href="/">
+      <title>Project Name::::系统管理平台,</title>
+
+      <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+      <link rel='stylesheet' href="stylesheets/style.css">
+      <link rel='stylesheet' href="stylesheets/carousel.css">
+      <link rel='stylesheet' href="stylesheets/details.css">
+      <link rel='stylesheet' href="stylesheets/shoppingcar.css">
+      {{{_sections.head}}}
+  </head>
+  <body>
+  <header>
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+          {{>navigation}}
+      </nav>
+  </header>
+  <main>
+      {{>sign-in}}
+
+      {{>sign-up}}
+
+      {{{body}}}
+  </main>
+  <footer class="container-fluid foot-wrap navbar-fixed-bottom">
+      {{>footer}}
+
+
+  </footer>
+
+  <script src="/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/vendor/validator/validator.min.js"></script>
+  <script src="/javascripts/validator.form.js"></script>
+  <script>
+      $(".change").on("click",function () {
+          var captchas = '/captcha?t=' +Date.now()+ Math.random();
+          $(".auth").attr('src',captchas)
+      })
+  </script>
+  {{{_sections.customjs}}}
+  </body>
+</html>

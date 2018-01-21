@@ -1,0 +1,96 @@
+
+<h1>Profile</h1>
+<p>Hi 你的用户ID ：{{UID}}</p>
+{{#each user}}
+
+
+    <div class="form-horizontal">
+        <div class="form-group">
+        <label for="fieldPhoto" class="col-sm-2 control-label">头像：</label>
+    {{#if profilePicPath}}
+        <div class="col-sm-4" id="profile-photo"><img src="{{profilePicPath}}" width="200px"></div>
+    {{else}}
+        <div class="col-sm-4 control-label-left " id="profile-photo">你还没有头像，请上传一张头像</div>
+    {{/if}}
+    </div>
+        <div class="form-group">
+            <label for="fieldLoginname" class="col-sm-2 control-label">登录名：</label>
+           <div class="col-sm-4 control-label-left ">
+               {{loginName}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="fieldEmail" class="col-sm-2 control-label">邮箱：</label>
+            <div class="col-sm-4 control-label-left ">
+                {{email}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="fieldAge " class="col-sm-2 control-label">年龄：</label>
+            <div class="col-sm-4 control-label-left ">
+                {{age}}
+            </div>
+        </div>
+    </div>
+{{/each}}
+
+<form class="form-horizontal" role="form"
+      enctype="multipart/form-data"
+      method="POST"
+      action="/upload-profile/{{UID}}/{{year}}/{{month}}/{{timestr}}">
+
+    <div class="form-group">
+        <label for="fieldPhoto" class="col-sm-2 control-label">Profile photo</label>
+        <div class="col-sm-4">
+            <input
+                    type="file"
+                    class="form-control"
+                    required
+                    accept="image/*"
+                    id="fieldPhoto"
+                    name="photo">
+            <input type="hidden" name="uid" value="{{UID}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+            <button type="submit"
+                    class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+
+
+
+{{#section 'customjs'}}
+    <script src="./javascripts/common.js"></script>
+    <script>
+
+    {{#each customer}}
+        var _loginName = {{loginName}};
+        var _strid = '{{_id}}';
+            localStorage.setItem("loginName",String(_loginName));
+            localStorage.setItem("UID",_strid);
+    {{/each}}
+
+    $(function () {
+       // alert(localStorage.getItem("UID"));
+      //  alert(localStorage.getItem("loginName"));
+    });
+
+        $(function () {
+            var imgpath=getURLPara('imgpath');
+            if(imgpath)
+            {
+                var imghtml = '<img src="'+ imgpath+'" width="200px">';
+                $("#profile-photo").html(imghtml);
+            }
+
+        })
+
+
+    </script>
+{{/section}}
+
+
+

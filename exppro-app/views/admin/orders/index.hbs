@@ -1,0 +1,118 @@
+{{#section 'head'}}
+    <meta name="robots" content="noindex">
+    <link href="./vendor/datatables.net-bs/css/dataTables.bootstrap.css" rel="stylesheet">
+    {{/section}}
+    <h1>{{title}}</h1>
+    <div class="content">
+
+        <table id="example"
+               class="table table-striped table-bordered"
+               cellspacing="0"
+               width="100%">
+        </table>
+    </div>
+
+    {{#section 'customjs'}}
+        <script src="./vendor/datatables.net/js/jquery.dataTables.js"></script>
+        <script src="./vendor/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+        <script src="./javascripts/common.js"></script>
+        <script>
+            //文档加载完成执行文档就绪事件
+            $(function () {
+                //获取表格需要的数据
+
+                var ordersSet = getOrdersArr(orders);
+
+                //用上面获取的数据渲染表格
+                renderTable(ordersSet);
+            });
+
+                //从服务器模板引擎的上下文中获取数据
+                //并将数据放入数组中
+                var orders = [];
+                {{#each orders}}
+                    var order ={};
+                    order.id = '{{_id}}';
+                    order.user= '{{user}}';
+                    order.qty= '{{qty}}';
+                    order.price= '{{price}}';
+
+                    order.createdAt= '{{createdAt}}';
+                    orders.push(order);
+
+                    var items  = [];
+                        {{#each item }}
+                        var _item = {};
+                        _item.name
+
+                                = '{{name}}';
+                        _item.p_qty = '{{qty}}';
+                        _item.p_price = '{{price}}';
+                        items.push(_item);
+                        {{/each}}
+                    order.item = items;
+
+                {{/each}}
+
+
+                //将数组中的数据按行列格式组织
+                function getOrdersArr(orders) {
+                    var jsoncount =orders.length;
+                    var orderTableData =  new Array();
+                    for(var i=0;i<jsoncount;i++)
+                    {
+                        var _rowArr = new Array();
+
+
+                        var _itemCount = orders[i].item.length;
+                        var _itemStr = '';
+                        for( var j=0;j<_itemCount;j++){
+                            _itemStr +='<ul class="nav nav-tabs">' +
+                                    '<li >'+  orders[i].item[j].name + '</li>' +
+                                    '<li > ' + orders[i].item[j].p_qty + '</li>' +
+                                    '<li>' + orders[i].item[j].p_price +"</li></ul>";
+
+                        }
+                        _rowArr[0]= _itemStr;
+
+//                        _rowArr[0]= orders[i].id;
+
+                        _rowArr[1]= orders[i].qty;
+
+                        _rowArr[2]= orders[i].price;
+
+                        _rowArr[3]= dateFormat(orders[i].createdAt);
+
+                        {{!#if permission}}
+                            _rowArr[4]= '<button class="btn btn-default btn-sm" \
+                     data-toggle="modal" data-target="#editModal" onclick="edit(\''+orders[i].id+'\')"> \
+                     <span class="glyphicon glyphicon-pencil"></span> \
+                  </button>\
+                <button class="btn btn-danger btn-sm" data-toggle="modal" \
+                 data-target="#deleteModal" onclick="del(\''+orders[i].id+'\')"> \
+                <span class="glyphicon glyphicon-trash"></span> \
+            </button>';
+                        {{!/if}}
+                        orderTableData[i]=_rowArr;
+                    }
+                    return orderTableData;
+                };
+                //给上面getOrdersArr方法组成的表格加上行标题（渲染数据）
+                function renderTable(dataSet) {
+                    $('#example').DataTable( {
+                        data:dataSet,
+                        columns: [
+                            { title: "<ul><li>商品名</li><li>数量</li><li>单价</li></ul>"},
+                            { title: "总数量"},
+                            { title: "总金额"},
+                            { title: "创建时间" },
+                            { title: "操作",Rable: false }
+
+                        ]
+                    } );
+                };
+
+
+
+        </script>
+        {{/section}}

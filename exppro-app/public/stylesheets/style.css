@@ -1,0 +1,51 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+main{
+  height: 1200px;
+}
+footer{
+  background: #eee;
+}
+a {
+  color: #00B7FF;
+}
+
+main{
+  margin: 30px auto 23%;
+  /*overflow-y: auto;*/
+  /*overflow-x: hidden;*/
+}
+h4{
+  text-align: center;
+}
+#inputPassword5 {
+  display: inline-block;
+  width: 70%;
+}
+#auth {
+  display: inline-block;
+  width: 29%;
+}
+img{
+  margin-top: 7px;
+}
+.captcha-style{
+  position: relative;
+}
+.captcha-style p{
+  position: absolute;
+
+}
+.captcha-style p:nth-child(3){
+  top:41px;
+  left:38%;
+  cursor: pointer;
+  text-decoration: solid;
+}
+.captcha-style p:last-child{
+  top:71px;
+  left:38%;
+  color: #4cae4c;
+}

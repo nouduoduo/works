@@ -1,0 +1,193 @@
+<article>
+    <div class="title_head">
+        <div class="active">
+            <h3>全部商品</h3>
+            <span>21</span>
+            <span class="pipe"></span>
+        </div>
+        <div>
+            <h3>降价商品</h3>
+            <span>0</span>
+            <span class="pipe"></span>
+        </div>
+        <div>
+            <h3>库存紧张</h3>
+            <span>0</span>
+        </div>
+        <div class="cart-sum">
+            <span class="pay-text">已选商品（不含运费）</span>
+            <span class="price">￥2347.80</span>
+            <input type="submit" class="settlement" value="结算">
+        </div>
+    </div>
+    <div class="m-orders  J_order orders-vip" id="J_supplier_0" data-hasgift="" data-supplier-id="0">
+        <div class="orders-hd">
+            <ul class="m-inline-block">
+                <li class="inline-block-item product-item">
+                    <input name="supplier_id[]" type="checkbox" checked="checked" value="0" id="J_orders_checkbox_0" class="J_supplier   f-hide">
+                    <span class="product-item-title" title="唯品自营&nbsp;">唯品自营&nbsp;</span>
+                </li>
+                <li class="inline-block-item price-item">
+                    <span class="text">单价</span>
+                </li>
+                <li class="inline-block-item quantity-item">
+                    <span class="text">数量</span>
+                </li>
+                <li class="inline-block-item subtotal-item">
+                    <span class="text">小计</span>
+                </li>
+                <li class="inline-block-item actions-item">
+                    <span class="text">操作</span>
+                </li>
+            </ul>
+        </div>
+        <div class="orders-bd">
+            <div class="m-table-box J_goodsGroup" data-active-no="">
+                <div class="table-box-inner">
+                    <table class="table orders-table">
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="float-bar-wrapper">
+        <div class="float-bar-left">
+            <div>
+                <label class="select">
+                    <input type="checkbox" class="select_A">
+                    <span>全选</span>
+                </label>
+            </div>
+            <div>
+                <a href="#">删除</a>
+            </div>
+            <div>
+                <a href="#">移入收藏夹</a>
+            </div>
+            <div>
+                <a href="#">分享</a>
+            </div>
+        </div>
+        <div class="float-bar-right">
+            <div>
+                已选商品
+                <span class="itemCount">0 </span>
+                件
+            </div>
+            <div>
+                <span>合计（不含运费）：</span>
+                <span class="total-symbol">￥</span>
+                <span class="itemCountPrice">298.00</span>
+                <input type="submit" class="settlements" value="结算">
+            </div>
+        </div>
+    </div>
+</article>
+{{#section 'customjs'}}
+    <script src="/javascripts/shopp-cart.js"></script>
+    <script>
+        function showCart() {
+            var shopData =  cart.getProductList();
+            var attr = "" ;
+            console.log(shopData);
+            shopData.forEach(function (item,idex) {
+                attr +=`<tr class="J_goods_item table-last-row" id="J_item_122166680" data-is_free_gift="" data-bind_free_gift="" data-supplier_id="0" data-group_index="0" data-product_id="363252621" data-sku_id="87896721386148408" data-size_id="980576693">
+                            <td class="product-item">
+                                <div class="m-product product-small">
+                                    <div class="images-box">
+                                        <img src="${item.picpath}" alt="">
+                                    </div>
+                                    <h3 class="product-title">
+                                        <a rel="external, noopener" title="${item.name}">${item.name}</a>
+                                    </h3>
+                                    <p class="product-size">尺码：L</p>
+                                </div>
+
+                            </td>
+                            <td class="price-item">
+                        <span class="m-price">
+                            <span class="J_surpriseSprice_wrap363252621 goods-cxoprice-tag u-hidden"></span>
+                            <span class="u-yen">¥</span><strong class="u-price" id="pri_${item.id}">${item.price}</strong>
+                        </span>
+                                <del class="m-price market-price">
+                                    <span class="u-yen">¥</span><span class="u-price">${item.originalPrice}</span>
+                                </del>
+                            </td>
+                            <td class="quantity-item">
+                                <div class="m-amount J_confirm_box J_cart_amount_confirm_box">
+                                    <a mars_sead="cart_num_sel" class="amount-trigger amount-trigger-minus J_cart_numSubtract J_fake_a" href="###">
+                                        <span class="line-horizontal"></span>
+                                        <span class="amount-trigger-loading"></span>
+                                    </a>
+                                    <div title="请选择购买数量" class="amount-num">
+                                        <div class=" num-box">
+                                            <p class="nunber-box">
+                                                <button type="button" class="increase" id="add_${item.id}">+</button>
+                                                <span id="qty_${item.id}">${item.qty}</span>
+                                                <input type="hidden" name="number" value="${item.qty}" id="qty_${item.id}">
+                                                <button type="button" class="reduce" id="red_${item.id}">-</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="subtotal-item">
+                            <span class="m-price subtotal-price">
+                                <span class="u-yen">¥</span>
+                                <strong class="u-price" id="num_${item.id}">
+                                ${item.numPrice}
+                                </strong>
+                            </span>
+                            </td>
+                            <td class="actions-item">
+                                <div class="m-order-del J_confirm_box J_cart_del_confirm_box">
+                                    <a class="c-order-button-del  J_fake_a  J_list_delLink" mars_sead="cart_del_btn" role="button" href="###">删除</a>
+                                    <div class="ui-tooltips ui-tooltips-handle ui-tooltips-top-arrow order-del-confirm-tooltips J_cart_item_confirm_tips is-order-del-confirm-tooltips-initialize-success">
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>`
+            });
+            $("tbody").html(attr);
+        }
+
+
+
+
+
+        $(function () {
+            showCart();
+            $(".increase").on("click",function () {
+                var idstr = $(this).attr("id");
+                var id = idstr.substr(4,idstr.length);
+
+                var qtyid = "qty_"+id;
+                var num =$("#"+qtyid).html();
+                num++;
+                $("#"+qtyid).html(num);
+            });
+            $(".reduce").on("click",function () {
+                var idstr = $(this).attr("id");
+                var id = idstr.substr(4,idstr.length);
+                var qtyid = "qty_"+id;
+                var num =$("#"+qtyid).html();
+
+                var priceid=$("#pri_"+id).html();
+
+                console.log(num,priceid)
+                if(num>1){
+                    num--;
+                    $("#num_"+id).html(num*priceid);
+                    $("#"+qtyid).html(num);
+                }else {
+                    return;
+                }
+            });
+        })
+
+
+    </script>
+{{/section}}

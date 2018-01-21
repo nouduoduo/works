@@ -1,0 +1,88 @@
+{{#section 'head'}}
+    <meta name="robots" content="noindex">
+    <link href="./vendor/datatables.net-bs/css/dataTables.bootstrap.css" rel="stylesheet">
+    {{/section}}
+    <h1>{{title}}</h1>
+    <div class="content">
+
+        <table id="example"
+               class="table table-striped table-bordered"
+               cellspacing="0"
+               width="100%">
+        </table>
+    </div>
+
+    {{#section 'customjs'}}
+        <script src="./vendor/datatables.net/js/jquery.dataTables.js"></script>
+        <script src="./vendor/datatables.net-bs/js/dataTables.bootstrap.js"></script>
+        <script>
+            //文档加载完成执行文档就绪事件
+            $(function () {
+                //获取表格需要的数据
+
+                var usersSet = getUsersArr(users);
+
+                //用上面获取的数据渲染表格
+                renderTable(usersSet);
+            });
+
+                //从服务器模板引擎的上下文中获取数据
+                //并将数据放入数组中
+                var users = [];
+                {{#each users}}
+                    var user ={};
+                    user.id = '{{_id}}';
+                    user.loginName= '{{loginName}}';
+
+                    user.createdAt= '{{createdAt}}';
+                    users.push(user);
+                {{/each}}
+
+
+                //将数组中的数据按行列格式组织
+                function getUsersArr(users) {
+                    var jsoncount =users.length;
+                    var userTableData =  new Array();
+
+                    for(var i=0;i<jsoncount;i++)
+                    {
+                        var _rowArr = new Array();
+                        _rowArr[0]= users[i].loginName;
+
+                        _rowArr[1]= users[i].createdAt;
+
+                        {{!#if permission}}
+                            _rowArr[2]= '<button class="btn btn-default btn-sm" \
+                     data-toggle="modal" data-target="#editModal" onclick="edit(\''+users[i].id+'\')"> \
+                     <span class="glyphicon glyphicon-pencil"></span> \
+                  </button>\
+                <button class="btn btn-danger btn-sm" data-toggle="modal" \
+                 data-target="#deleteModal" onclick="del(\''+users[i].id+'\')"> \
+                <span class="glyphicon glyphicon-trash"></span> \
+            </button>';
+                        {{!/if}}
+                        userTableData[i]=_rowArr;
+                    }
+                    return userTableData;
+                };
+
+
+                //给上面getUsersArr方法组成的表格加上行标题（渲染数据）
+                function renderTable(dataSet) {
+                    $('#example').DataTable( {
+                        data:dataSet,
+                        columns: [
+                            { title: "登录名"},
+
+                            { title: "创建时间" },
+
+                            { title: "操作",orderable: false }
+
+                        ]
+                    } );
+                };
+
+
+
+        </script>
+        {{/section}}

@@ -1,0 +1,223 @@
+{{#section 'head'}}
+    <link href="./stylesheets/shoppingcar.css" rel="stylesheet">
+{{/section}}
+
+
+
+<div class="shoppingCar container">
+    <div class="title_head">
+        <div class="active">
+            <h3>全部商品</h3>
+            <span class="itemCount">0</span>
+           
+        </div>
+        <!--
+        <div>
+         <span class="pipe"></span>
+            <h3>降价商品</h3>
+            <span>0</span>
+            <span class="pipe"></span>
+        </div>
+        <div>
+            <h3>库存紧张</h3>
+            <span>0</span>
+        </div>
+        -->
+        <div class="cart-sum">
+            <span class="pay-text">已选商品（不含运费）</span>
+            ￥<span class="price totalAmount">0.00</span>
+            <input type="button" onclick="AddOrders()"  class="settlement" value="结算">
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-hover">
+        <thead>
+            <tr>
+                <th class="col-lg-1 col-xs-1 col-sm-1 col-md-1">
+                    <label class="select">
+                        <input type="checkbox" class="check_all select_A">
+                        <span>全选</span>
+                    </label>
+                </th>
+                <th class="col-lg-4 col-xs-4 col-sm-4 col-md-4">商品信息</th>
+                <th class="col-lg-2 col-xs-2 col-sm-2 col-md-2"></th>
+                <th class="col-lg-1 col-xs-1 col-sm-1 col-md-1">单价</th>
+                <th class="col-lg-1 col-xs-1 col-sm-1 col-md-1">数量</th>
+                <th class="col-lg-1 col-xs-1 col-sm-1 col-md-1">金额</th>
+                <th class="col-lg-1 col-xs-1 col-sm-1 col-md-1">操作</th>
+            </tr>
+        </thead>
+        <tbody id="tdbody">
+           
+           
+        </tbody>
+    </table>
+    <div class="float-bar-wrapper">
+        <div class="float-bar-left">
+            <div>
+                <label class="select">
+                    <input type="checkbox" class="check_all select_A">
+                    <span>全选</span>
+                </label>
+            </div>
+            <div>
+                <a onclick="removeMultiCart()">删除</a>
+            </div>
+            <!--
+            <div>
+                <a href="#">移入收藏夹</a>
+            </div>
+            <div>
+                <a href="#">分享</a>
+            </div>
+            -->
+        </div>
+        <div class="float-bar-right">
+            <div>
+                已选商品
+                <span class="itemCount">0 </span>
+                件
+            </div>
+            <div>
+                <span>合计（不含运费）：</span>
+                <span class="total-symbol">￥</span>
+                <span class="itemCountPrice totalAmount" >0.00</span>
+                <input type="button" onclick="AddOrders()" class="settlements" value="结算">
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+{{#section 'customjs'}}
+<script src="javascripts/shop-cart.js"></script>
+
+
+    <script>
+        //将购物车中的信息显示在表格中
+        function showCart(){
+             var ShoppingCart = JSON.parse(utils.getParam("ShoppingCart"));
+            //console.log("ShoppingCart===",ShoppingCart);
+            //alert(ShoppingCart.totalAmount)
+            $(".itemCount").html(ShoppingCart.totalNumber);
+            $(".totalAmount").html(ShoppingCart.totalAmount);
+
+            var trstr = '';
+            var productlis = cart.getProductList(localStorage.getItem("uid"));    //取出购物车商品
+           // console.log("productlis===",productlis);
+            productlis.forEach(function(item){
+             // alert(item.id) ;
+               trstr += '<tr>';
+               trstr += '<td><input class="check_one" type="checkbox" value="'+item.id+'"></td>';
+               trstr += '<td> <a href="#">';
+               trstr += '<img src="'+item.picpath+'" class=" img-responsive">';
+               trstr += ' <span>'+item.id+'</span></a> </td>';
+               trstr += '<td class="td-info">';
+               trstr += '<div><span>颜色分类：</span><span>浅绿.短款</span><span>[现货]</span></div>';
+               trstr += '<div><span>尺&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：</span><span>S</span></div>';
+               trstr += '</td>';
+               trstr += '<td>';
+               trstr += '<div class="price-original">￥'+item.originalPrice+'</div>';
+               trstr += '<div class="price-now">￥<span id="price_'+item.id+'">'+item.price+'</span></div>';
+               trstr += '</td>';
+               trstr += '<td class="td-amount">';
+               trstr += '<div>';
+               trstr += '<button class="add" type="button" onclick="updataAddCartQty(\''+item.id+'\')" >+</button>';
+               trstr += '<span class="qty"  id="qty_'+item.id+'">'+item.qty+'</span>';
+               trstr += '<input value="'+item.qty+'" type="hidden" class="num" name="qty"/>';
+               trstr += '<button class="reduce" type="button"  onclick="updataRedCartQty(\''+item.id+'\')">-</button>';
+               trstr += '</div>';
+               trstr += '</td>';
+               trstr += '<td class="td-sum">￥<span class="total" id="total_'+item.id+'">'+item.price * item.qty+'</span></td>';
+               trstr += '<td class="operation">';
+               //trstr += '<p><a href="#">移入收藏夹</a></p>';
+               trstr += '<p><a onclick="removeCart(\''+item.id+'\')">删除</a></p></td>';
+               trstr += '</tr>';
+            });
+
+            $("#tdbody").html(trstr);
+        }
+
+        //点击+号更新购物车中的商品数量
+        function updataAddCartQty(id){
+                 var qtyid = "qty_"+id;
+                 var org_qty = $("#"+qtyid).html();
+                 org_qty++;
+                 cart.updateProductNum(localStorage.getItem("uid"),id,org_qty);
+                 showCart();
+        }
+         //点击-号更新购物车中的商品数量
+        function updataRedCartQty(id){
+                 var qtyid = "qty_"+id;
+                 var org_qty = $("#"+qtyid).html();
+                 org_qty--;
+                 if(org_qty>0){
+                   cart.updateProductNum(localStorage.getItem("uid"),id,org_qty);
+                 }
+                 if(org_qty==0)
+                 {
+                    cart.clearProduct(localStorage.getItem("uid"),id);
+                 }
+                 showCart();
+            
+        }
+
+        //从购物车中删除指定商品
+        function removeCart(id){
+           cart.clearProduct(localStorage.getItem("uid"),id);
+           showCart();
+        }
+
+        //从购物车中删除选中的商品
+        function removeMultiCart(){
+           var chk_value =[]; 
+            $('input[class="check_one"]:checked').each(function(){ 
+              chk_value.push($(this).val()); 
+            }); 
+           // console.log("chk_value====",chk_value);
+            chk_value.forEach(function(id){
+               cart.clearProduct(localStorage.getItem("uid"),id);
+            });
+           
+           showCart();
+        }
+       
+       //结算（添加到订单）
+       function AddOrders(){
+            var _UID = localStorage.getItem("uid");
+           var _cart = JSON.parse(utils.getParam("ShoppingCart"));
+           var item=JSON.stringify(_cart.productlist);
+//           var item=_cart.productlist;
+           var qty=_cart.totalNumber;
+           var price=_cart.totalAmount;
+           var para  = `customer=${_UID}&item=${item}&qty=${qty}&price=${price}`;
+           alert(para);
+           $.ajax({
+               url:'/order/create',
+               type: 'POST',
+               async:true,
+               data:para,
+               success: function(data) {
+                   if(parseInt(data.code)==0)
+                   {
+                       alert("==11111==");
+                   }
+                   if(parseInt(data.code)==1)
+                   {
+                       alert("==22222==");
+                       // window.location.href=data.url;
+                   }
+               }
+           });
+       }
+
+       //文档就绪后显示购物车中信息
+       $(function(){
+           showCart() ; 
+       });
+
+       
+
+     </script>
+    <script src="javascripts/common.js"></script>
+{{/section}}

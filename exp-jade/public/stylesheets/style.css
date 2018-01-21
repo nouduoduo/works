@@ -1,0 +1,31 @@
+body {
+  padding: 0 !important;
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.lable-text{
+  color: #6289d8;
+}
+header{
+  background: yellow;
+}
+ul{
+  width: 350px;
+  line-height: 50px;
+}
+li{
+  width: 24%;
+  text-align: center;
+}
+footer{
+  text-align: right;
+}
+img{
+  width: 200px;
+  height: 200px;
+  margin-right: 10px;
+}

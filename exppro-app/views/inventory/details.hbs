@@ -1,0 +1,173 @@
+
+{{#section 'head'}}
+    <link href="./stylesheets/details.css" rel="stylesheet">
+{{/section}}
+
+<div class="details">
+    <form id="addtocar">
+    <div class="left">
+       
+         
+         <img class="img-responsive" 
+              id="bigpic"
+              src={{inventory.picPath.[0]}}>
+         <input type="hidden" 
+	            name="propicpath"
+			    value="{{inventory.picPath.[0]}}"
+			    id="propicpath">   
+
+
+        <div>
+            {{#each inventory.picPath}}
+            <img class="thumbnail img-responsive" src={{.}}>
+            {{/each}}
+        </div>
+    </div>
+    <div class="right">
+        <div class="pib-title">
+            <h2>{{inventory.sku}}</h2>
+            <input type="hidden" 
+                   name="sku"
+                   id="buysku"
+                   value="{{inventory.sku}}"
+            >
+            <p>通勤优雅 V字领型 长袖针织连衣裙</p>
+        </div>
+        <div class="pi-price-box  ">
+            <span class="pbox-price showthis">
+                <span>￥</span>
+                <span>{{inventory.price}}</span>
+                 <input type="hidden" 
+                   name="price"
+                   id="buyprice"
+                   value="{{inventory.price}}"
+            >
+            </span>
+            <span class="pi-dicount-box">
+                <span class="pbox-off">3.5折</span>
+                <span>￥</span>
+                <span>{{inventory.originalPrice}}</span>
+                <input type="hidden" 
+                   name="price"
+                   id="buyoriginal-price"
+                   value="{{inventory.originalPrice}}"
+            </span>
+        </div>
+        <div>
+            <span class="title">运费</span>
+            <span>￥10</span>
+        </div>
+        <dl class="i-size  J-sizeArea-wrap">
+            <dt class="title">尺码</dt>
+         {{#if inventory.size.B}}
+				{{#each inventory.size.B}}
+					 <dd><i></i>{{.}}</dd>
+				  
+				{{/each}}
+			{{/if}}
+           
+        </dl>
+        <div><span class="title">库存 </span>
+             <span>{{inventory.instock}}件</span></div>
+        <div class=" num-box">
+            <span class="title">数量 </span>
+        <p><button type="button" onclick="addQty()">+</button>
+        <span id="showqty">1</span>
+        <input type="hidden" id="buyqty" name="qty" value="1" >
+        <button type="button" onclick="redQty()">-</button>
+             </p></div>
+        <div><button type="button" class="btn btn-danger add-to-car" >加入购物车</button>
+        <button type="button" class="btn btn-success">立即购买</button></div>
+    </div>
+</form>
+
+
+    <div class="des">
+        <h2>商品描述</h2>
+        <div class="desDeta">
+            <div>
+                 <p>{{inventory.description}}</p>
+            </div>
+           
+           <div>
+                <img src={{inventory.picPath.[0]}}>
+           </div>
+        </div>
+    </div>
+</div>
+{{#section 'customjs'}}
+<script src="javascripts/shop-cart.js"></script>
+<script>
+    var orgVal ;
+    function addQty(){
+	  orgVal++; 
+	  $("#showqty").html(orgVal); 
+      $("#buyqty").val(orgVal);
+	}
+	function redQty(){
+        if(parseInt(orgVal)>1)
+        {
+             orgVal--;    
+        }
+	 
+	  $("#showqty").html(orgVal); 
+      $("#buyqty").val(orgVal);
+	}
+
+
+   $(function(){
+       orgVal = $("#buyqty").val(); 
+       $(".thumbnail").click(function(){
+           $("#bigpic").attr("src",$(this).attr("src"));
+           $("#propicpath").val($(this).attr("src"));
+
+       });
+       $(".add-to-car").click(function(){
+
+           if(!localStorage.getItem("loginName")){
+
+               $("a[data-target='#myModal']").click()
+           }else {
+               addToCart();
+           }
+
+       });
+   });
+
+    function addToCart() {
+        //localStorage.getItem('shop-car')
+        //var para = $("#addtocar").serialize();
+        //localStorage.setItem('shop-car',para);
+        var pro_id      = $("#buysku").val();        //属性名用引号括起来，属性间由逗号隔开
+        var pro_name    = $("#buysku").val();
+        var pro_num     = $("#buyqty").val();
+        var pro_price   = $("#buyprice").val();
+        var pro_original_price  = $("#buyoriginal-price").val();
+
+        var pro_picpath = $("#propicpath").val();
+
+
+        var product = {
+            id: pro_id,        //属性名用引号括起来，属性间由逗号隔开
+            name: pro_name,
+            qty: pro_num,
+            picpath: pro_picpath,
+            originalPrice: pro_original_price,
+            price: pro_price
+        };
+
+
+        // cart.clearProduct();
+        cart.addProduct(localStorage.getItem("uid"),product);    //商品加入到购物车
+        // var productlis = cart.getProductList();    //取出购物车商品
+        alert("=333==");
+        //console.log("productlist==",productlist);
+        // var isExist=cart.existProduct();
+        // console.log(isExist);
+        // cart.deleteProduct(1);
+        // var isExist1=cart.existProduct();
+        // console.log(isExist1);
+    }
+
+ </script>
+ {{/section}}

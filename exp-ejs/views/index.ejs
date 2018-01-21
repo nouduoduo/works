@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('layouts/head') -%>
+  </head>
+  <body>
+    <%- include('layouts/header') -%>
+
+
+    <main> 
+    <h1>this is <%= title %> page</h1>
+    <p>Welcome to <%= title %></p>
+    <% if (user) { %>
+      <h2><%= user.name %></h2>
+    <% } %>
+    </main> 
+
+
+
+    <%- include('layouts/footer') -%>
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>

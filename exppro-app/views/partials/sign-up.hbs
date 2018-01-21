@@ -1,0 +1,55 @@
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel1">SignUP</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <!--sign-up-->
+                <form class="form-horizontal" name="signUpform" id="signUpform" action="/user/create" method="POST" onsubmit="return signUpValidator()">
+                    <div class="form-group">
+                        <label for="phone" class="col-sm-2 control-label">loginName</label>
+                        <div class="col-sm-10 hpone">
+                            <input type="tel"
+                                   class="form-control"
+                                   id="loginName"
+                                   placeholder="telephoneNumber"
+                                   name="loginName"
+                                   onblur="checkedLoginName()">
+                            <div id="loginName-err"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="pwd" placeholder="Password" name="pwd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword4" class="col-sm-2 control-label">Verify</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputPassword4" placeholder="Verify Password" name="repwd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword5" class="col-sm-2 control-label">auth code</label>
+                        <div class="col-sm-10 captcha-style">
+                            <input type="text" class="form-control" name="captcha" id="captcha" placeholder="auth code">
+                            <img src="/captcha"  class="auth" />
+                            <p class="change">看不清楚,换一张</p>
+                            <p >验证码不区分大小写</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" >Save changes</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

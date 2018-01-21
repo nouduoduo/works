@@ -1,0 +1,60 @@
+{{#each partials.navigationContext.locations}}
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Bootstrap theme</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contart">Contact</a></li>
+                <li class="dropdown">
+                    <a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/">Action</a></li>
+                        <li><a href="/">Another action</a></li>
+                        <li><a href="/user">客户管理</a></li>
+                        <li><a href="/inventory">库存管理</a></li>
+                        <li class="dropdown-header"><a href="/order">订单管理</a></li>
+                        <li><a href="/comment">评论管理</a></li>
+                        <li><a href="/user">用户管理系统</a></li>
+                        <li><a href="/shoppingcar">购物车</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {{#if Login_name}}
+                    <li> <a  class="dropdown-toggle glyphicon glyphicon-user"
+                             data-toggle="dropdown"> Hi {{Login_name}}<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li> <a href="/customer/show/{{Login_name}}" class="active">个人中心</a></li>
+                            <li> <a href="/shoppingcar" class="active">购物车</a></li>
+                            <li> <a href="/myorder" class="active">我的订单</a></li>
+                            <li> <a href="/changpwd" class="active">修改密码</a></li>
+                            <li id="signout"> <a href="/signout" class="active"><span class="glyphicon glyphicon-log-out">&nbsp;</span>退出  </a></li>
+                        </ul>
+                    </li>
+                {{else}}
+                    <li>
+                        <a id="in" type="button" class="btn btn-lg" data-toggle="modal" data-target="#myModal">
+                            SignIn
+                        </a>
+                    </li>
+                    <li>
+                        <a id="up" type="button" class="btn btn-lg" data-toggle="modal" data-target="#myModal1">
+                            SignUp
+                        </a>
+                    </li>
+                {{/if}}
+
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+{{/each}}
